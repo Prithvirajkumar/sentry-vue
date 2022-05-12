@@ -1,5 +1,4 @@
 import { createApp } from "vue";
-import { createPinia } from "pinia";
 import * as Sentry from "@sentry/vue";
 import { BrowserTracing } from "@sentry/tracing";
 
@@ -23,7 +22,6 @@ Sentry.init({
     tracesSampleRate: 1.0,
   });
 
-app.use(createPinia());
 app.use(router);
 
 app.mount("#app");

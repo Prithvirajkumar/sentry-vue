@@ -13,19 +13,15 @@
         <EventButton title="RangeError" :onClick="rangeError" />
         <EventButton title="HTTP Request to Backend" :onClick="restError" />
       </div>
-      <div id="json">
-        Pending HTTP Request on page load...
-      </div>
     </div>
   </div>
 </template>
 
 <script>
 import EventButton from "../components/EventButton.vue";
-import ProductSummary from "../components/ProductSummary.vue";
 import * as Sentry from "@sentry/vue";
 
-const HELLO = "Hello ";
+const HELLO = "Enter User's email address: ";
 
 //Required for distributed tracing outside of localhost
 const tracingOrigins = ['localhost', 'empowerplant.io', 'run.app', 'appspot.com', /^\//];
@@ -34,8 +30,7 @@ const env = "dev";
 export default {
   name: "app",
   components: {
-    EventButton,
-    ProductSummary
+    EventButton
   },
   data: function() {
     return { 
@@ -43,36 +38,6 @@ export default {
       userEmail: "",
       products: [] 
     };
-  },
-  async created() {
-    // Do this or the trace won't include the backend transaction
-    const transaction = Sentry.getCurrentHub().getScope().getTransaction();
-    let span = {};
-    if (transaction) {
-      span = transaction.startChild({
-        op: "http_request",
-        description: "load_products",
-    })}
-    console.log("getProducts...");
-
-    try {
-      var requestOptions = {
-        method: 'GET',
-        redirect: 'follow'
-      };
-
-      fetch("https://application-monitoring-flask-dot-sales-engineering-sf.appspot.com/products", requestOptions)
-        .then(response => response.text())
-        .then(result => {this.products = JSON.parse(result); console.log(result)})
-        .catch(error => {
-          console.log('error', error);
-        });
-    } catch (ex) {
-      console.log(ex);
-    }
-
-    span.finish();
-
   },
 
   methods: {
@@ -177,7 +142,7 @@ export default {
 </script>
 
 <style>
-@media (min-width: 1024px) {
+@media (min-width: 1px) {
   .about {
     min-height: 100vh;
     display: flex;

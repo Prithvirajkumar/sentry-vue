@@ -18,15 +18,16 @@ export default {
 .event-button {
   height: 60px;
   width: 600px;
-  background-color: #6c5fc7;
-  color: white;
+  background-color: white;
+  transition: 0.4s;
+  color: black;
   margin-top: 0.6rem;
   font-size: 1.2rem;
-  font-weight: bold;
+  border-color: hsla(160, 100%, 37%, 1);
 }
 
 .event-button:hover {
-  background-color: #5243bd;
-  border-color: #4e3fb4;
+  background-color: hsla(160, 100%, 37%, 1);
+  color: white;
 }
 </style>
