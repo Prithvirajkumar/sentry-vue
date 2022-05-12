@@ -37,7 +37,16 @@
         <div className="testimonial-section">
           <h1>What Our Customers Say About Us</h1>
           <ul className="testimonial-list">
-
+            <li v-for="renderedTestimonial in renderedTestimonials" :key="renderedTestimonial.name">
+                <div>
+                  <div className="testimonial-blob">
+                  {{'"'}}{{renderedTestimonial.testimonial}}{{'"'}}
+                  </div>
+                  <div>
+                  {{"-"}} {{renderedTestimonial.name}}
+                  </div>
+                </div>
+            </li>
           </ul>
         </div>
       </div>
@@ -53,7 +62,6 @@ import Noah from '../components/employees/noah';
 
 // importing massive json dumps so slow down performance
 import testimonials from '../components/testimonials/testimonials.json'
-import testimonials2 from '../components/testimonials/testimonials2.json'
 
 const employees = [Jane, Lily, Keith, Mason, Emma, Noah];
 
@@ -61,10 +69,6 @@ const employees = [Jane, Lily, Keith, Mason, Emma, Noah];
 const testimonialArray = []
 
 testimonials.forEach(eachTestimonial => {
-  testimonialArray.push(eachTestimonial)
-})
-
-testimonials2.forEach(eachTestimonial => {
   testimonialArray.push(eachTestimonial)
 })
 
@@ -78,7 +82,8 @@ console.log(renderedTestimonials)
 export default {
   data: function() {
     return { 
-      employees: employees 
+      employees: employees,
+      renderedTestimonials: renderedTestimonials 
     };
   },
 }
@@ -98,6 +103,7 @@ export default {
   padding-top: 2rem;
   display: flex;
   flex-direction: column;
+  margin-top: 3rem
 }
 
 .about-page > div {
@@ -167,6 +173,7 @@ ul.employee-list li img {
 
 ul.testimonial-list {
   list-style: none;
+  margin-top: 1rem;
 }
 
 ul.testimonial-list li {

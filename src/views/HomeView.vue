@@ -60,7 +60,7 @@ export default {
 
       fetch("https://application-monitoring-flask-dot-sales-engineering-sf.appspot.com/products", requestOptions)
         .then(response => response.text())
-        .then(result => {this.products = JSON.parse(result); console.log(result); this.loading = false ;console.log(this.loading)})
+        .then(result => {this.products = JSON.parse(result); this.loading = false; console.log(this.loading)})
         .catch(error => {
           console.log('error', error);
         });

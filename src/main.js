@@ -9,7 +9,8 @@ const app = createApp(App);
 
 Sentry.init({
     app,
-    dsn: "https://e00537ffe7614a74af243151fe8aa943@o1161257.ingest.sentry.io/6397104",
+    dsn: import.meta.env.VITE_APP_DSN,
+    release: import.meta.env.VITE_APP_RELEASE,
     integrations: [
       new BrowserTracing({
         routingInstrumentation: Sentry.vueRouterInstrumentation(router),
