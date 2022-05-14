@@ -20,7 +20,8 @@ Sentry.init({
     // of transactions for performance monitoring.
     // We recommend adjusting this value in production
     tracesSampleRate: 1.0,
-    autoSessionTracking: true
+    autoSessionTracking: true,
+    trackComponents: true,
   });
 
 app.use(router);
