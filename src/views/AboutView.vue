@@ -53,6 +53,7 @@
 </template>
 
 <script>
+import * as Sentry from "@sentry/vue";
 import Jane from '../components/employees/jane';
 import Lily from '../components/employees/lily';
 import Keith from '../components/employees/keith';
@@ -64,6 +65,10 @@ import Noah from '../components/employees/noah';
 import testimonials from '../components/testimonials/testimonials.json'
 
 const employees = [Jane, Lily, Keith, Mason, Emma, Noah];
+
+const transaction = Sentry.startTransaction({ name: "Load Testimonials" });
+
+Sentry.configureScope(scope => scope.setSpan(transaction));
 
 // performing unnecessary operations to further slow down performance
 const testimonialArray = []
@@ -78,6 +83,7 @@ for (let i=0; i<=4; i++) {
   renderedTestimonials.push(testimonialArray[i])
 }
 console.log(renderedTestimonials)
+transaction.finish();
 
 export default {
   data: function() {

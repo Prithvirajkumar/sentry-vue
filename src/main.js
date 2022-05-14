@@ -10,7 +10,6 @@ const app = createApp(App);
 Sentry.init({
     app,
     dsn: import.meta.env.VITE_APP_DSN,
-    release: import.meta.env.VITE_APP_RELEASE,
     integrations: [
       new BrowserTracing({
         routingInstrumentation: Sentry.vueRouterInstrumentation(router),
@@ -21,6 +20,7 @@ Sentry.init({
     // of transactions for performance monitoring.
     // We recommend adjusting this value in production
     tracesSampleRate: 1.0,
+    autoSessionTracking: true
   });
 
 app.use(router);

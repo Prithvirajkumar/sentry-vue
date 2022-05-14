@@ -68,7 +68,7 @@ export default {
       console.log(ex);
     }
 
-    span.finish();
+    transaction.finish();
 
   },
 }
