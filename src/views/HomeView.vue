@@ -23,6 +23,31 @@
 import ProductSummary from "../components/ProductSummary.vue";
 import * as Sentry from "@sentry/vue";
 
+// importing massive json dumps so slow down performance
+import testimonials from '../components/testimonials/testimonials.json'
+
+const employees = [Jane, Lily, Keith, Mason, Emma, Noah];
+
+const transaction = Sentry.startTransaction({ name: "Load Testimonials" });
+
+Sentry.configureScope(scope => scope.setSpan(transaction));
+
+// performing unnecessary operations to further slow down performance
+const testimonialArray = []
+
+testimonials.forEach(eachTestimonial => {
+  testimonialArray.push(eachTestimonial)
+})
+
+// registering and rendering only the first five items of the entire dump
+const renderedTestimonials = [];
+for (let i=0; i<=4; i++) {
+  renderedTestimonials.push(testimonialArray[i])
+}
+console.log(renderedTestimonials)
+transaction.finish();
+
+
 const HELLO = "Hello ";
 
 //Required for distributed tracing outside of localhost
