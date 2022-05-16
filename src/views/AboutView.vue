@@ -63,6 +63,7 @@ import Noah from '../components/employees/noah';
 
 // importing massive json dumps so slow down performance
 import testimonials from '../components/testimonials/testimonials.json'
+import testimonials2 from '../components/testimonials/testimonials2.json'
 
 const employees = [Jane, Lily, Keith, Mason, Emma, Noah];
 
@@ -75,6 +76,10 @@ Sentry.getCurrentHub().configureScope(scope => scope.setSpan(transaction));
 const testimonialArray = []
 
 testimonials.forEach(eachTestimonial => {
+  testimonialArray.push(eachTestimonial)
+})
+
+testimonials2.forEach(eachTestimonial => {
   testimonialArray.push(eachTestimonial)
 })
 

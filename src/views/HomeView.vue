@@ -34,27 +34,28 @@ testimonials2.forEach(eachTestimonial => {
   testimonialArray.push(eachTestimonial)
 })
 
-// registering and rendering only the first five items of the entire dump
-const renderedTestimonials = [];
-for (let i=0; i<=4; i++) {
-  renderedTestimonials.push(testimonialArray[i])
+const finalRenderTestimonal = (testimonialArrayIn) => {
+  // registering and rendering only the first five items of the entire dump
+  const renderedTestimonials = [];
+  for (let i=0; i<=4; i++) {
+    renderedTestimonials.push(testimonialArrayIn[i])
 
+  }
+  console.log('render', renderedTestimonials)
+  return renderedTestimonials
 }
-console.log(renderedTestimonials)
+
+const resultingTest = finalRenderTestimonal(testimonialArray)
 
 const span = transaction.startChild({
   data: {
-    renderedTestimonials
+    resultingTest
   },
   op: 'task',
   description: `running the testimonial rendering`,
 });
 span.finish();
 transaction.finish();
-
-//Required for distributed tracing outside of localhost
-const tracingOrigins = ['localhost', 'empowerplant.io', 'run.app', 'appspot.com', /^\//];
-const env = "dev";
 
 
 export default {
@@ -68,7 +69,8 @@ export default {
       loading: true 
     };
   },
-  async created() {
+  beforeCreate() {
+    try {
     // Do this or the trace won't include the backend transaction
     const transaction = Sentry.getCurrentHub().getScope().getTransaction();
     let span = {};
@@ -77,26 +79,33 @@ export default {
         op: "http_request",
         description: "load_products",
     })}
-    console.log("getProducts...");
+    console.log('transaction', transaction)
+    console.log('traceid', transaction.traceId)
+    console.log('spanID', transaction.spanId)
+    const traceAndSpanID = transaction.traceId + "-" + transaction.spanId;
 
-    try {
+    console.log("getProducts...");
       var requestOptions = {
         method: 'GET',
+        headers: {"Content-Type": "application/json", "sentry-trace": traceAndSpanID},
         redirect: 'follow'
       };
 
       fetch("https://application-monitoring-flask-dot-sales-engineering-sf.appspot.com/products", requestOptions)
         .then(response => response.text())
-        .then(result => {this.products = JSON.parse(result); this.loading = false; console.log(this.loading)})
+        .then(result => {
+          this.products = JSON.parse(result); 
+          this.loading = false;
+          })
         .catch(error => {
           console.log('error', error);
         });
     } catch (ex) {
       console.log(ex);
-    }
-
+    } finally {
+    span.finish();
     transaction.finish();
-
+    }
   },
 }
 
