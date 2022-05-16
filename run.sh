@@ -8,8 +8,8 @@ RELEASE=$PACKAGE@$VERSION
 
 echo $RELEASE
 
-SENTRY_ORG=prithvi-0c
-SENTRY_PROJECT=vue-test
+SENTRY_ORG=testorg-az
+SENTRY_PROJECT=prithvi-test-vue
 PREFIX=assets
 
 npm run build
