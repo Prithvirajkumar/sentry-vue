@@ -7,14 +7,6 @@
           <ProductSummary :products="products" />
         </div>
       </div>
-      <div id="loadImage-wrap">
-        <img id="loadImage" />
-        <img id="loadImage2" />
-        <img id="loadImage3" />
-        <img id="loadImage4" />
-        <img id="loadImage5" />
-      </div>
-
     </div>
   </div>
 </template>
@@ -25,10 +17,9 @@ import * as Sentry from "@sentry/vue";
 
 // importing massive json dumps so slow down performance
 import testimonials from '../components/testimonials/testimonials.json'
+import testimonials2 from '../components/testimonials/testimonials2.json'
 
-const employees = [Jane, Lily, Keith, Mason, Emma, Noah];
-
-const transaction = Sentry.startTransaction({ name: "Load Testimonials" });
+const transaction = Sentry.startTransaction({ name: "loadTestimonialsHomePage" });
 
 Sentry.configureScope(scope => scope.setSpan(transaction));
 
@@ -39,16 +30,27 @@ testimonials.forEach(eachTestimonial => {
   testimonialArray.push(eachTestimonial)
 })
 
+testimonials2.forEach(eachTestimonial => {
+  testimonialArray.push(eachTestimonial)
+})
+
 // registering and rendering only the first five items of the entire dump
 const renderedTestimonials = [];
 for (let i=0; i<=4; i++) {
   renderedTestimonials.push(testimonialArray[i])
+
 }
 console.log(renderedTestimonials)
+
+const span = transaction.startChild({
+  data: {
+    renderedTestimonials
+  },
+  op: 'task',
+  description: `running the testimonial rendering`,
+});
+span.finish();
 transaction.finish();
-
-
-const HELLO = "Hello ";
 
 //Required for distributed tracing outside of localhost
 const tracingOrigins = ['localhost', 'empowerplant.io', 'run.app', 'appspot.com', /^\//];

@@ -66,9 +66,10 @@ import testimonials from '../components/testimonials/testimonials.json'
 
 const employees = [Jane, Lily, Keith, Mason, Emma, Noah];
 
-const transaction = Sentry.startTransaction({ name: "Load Testimonials" });
+const transaction = Sentry.startTransaction({ name: "loadTestimonialsAboutPage" });
 
-Sentry.configureScope(scope => scope.setSpan(transaction));
+Sentry.getCurrentHub().configureScope(scope => scope.setSpan(transaction));
+
 
 // performing unnecessary operations to further slow down performance
 const testimonialArray = []
@@ -83,6 +84,15 @@ for (let i=0; i<=4; i++) {
   renderedTestimonials.push(testimonialArray[i])
 }
 console.log(renderedTestimonials)
+
+const span = transaction.startChild({
+  data: {
+    renderedTestimonials
+  },
+  op: 'task',
+  description: `running the testimonial rendering`,
+});
+span.finish();
 transaction.finish();
 
 export default {

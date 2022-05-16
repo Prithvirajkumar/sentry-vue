@@ -96,7 +96,7 @@ export default {
     },
 
     restError: function() {
-      const transaction = Sentry.startTransaction({ name: "checkout" });
+      const transaction = Sentry.startTransaction({ name: "manual-checkout" });
       // Do this or the trace won't include the backend transaction
       Sentry.getCurrentHub().configureScope(scope => scope.setSpan(transaction));
       //Sentry.configureScope(scope => scope.setSpan(transaction));
