@@ -1,35 +1,22 @@
-# sentry-vue
+# Vue Demo
+This project was created using Vue CLI - https://cli.vuejs.org/guide/creating-a-project.html#vue-create
+- Error Monitoring...Performance Monitoring...Release Health...
+- BrowserTracing (Performance)  
 
-This template should help get you started developing with Vue 3 in Vite.
+## Setup
+Create a .env and enter your DSN. See .env.example for an example.
 
-## Recommended IDE Setup
+## Run
+npm install - this will install all dependencies
+./run.sh - this will build the files and will also serve the built file. This will also handle uploading of sourcemaps
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.vscode-typescript-vue-plugin).
+## Demo
+1. Home page
+This page is slowed down using back end configurations, performance drops can be viewed under the 'home' transaction.
+Selecting checkout will generate an Internal Server Error
 
-## Customize configuration
+2. About Us page
+This page is slowed down using front end configurations, performance drops can be viewed under the 'about' transaction.
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+3. Manually Trigger Errors page
+This page allows you to generate errors by triggering them using buttons

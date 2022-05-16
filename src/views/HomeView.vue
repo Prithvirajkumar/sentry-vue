@@ -1,11 +1,16 @@
 <template>
+  <div class="loading-container">
+    <div v-if="loading" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+  </div>
   <div class="home">
     <div id="app">
-      <div v-if="loading" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
       <div id="product-list">
         <div>
           <ProductSummary :products="products" />
         </div>
+      </div>
+      <div class="button-container">
+        <button v-if="!loading" class="checkout-button" :onClick="checkout">Checkout</button>
       </div>
     </div>
   </div>
@@ -14,49 +19,6 @@
 <script>
 import ProductSummary from "../components/ProductSummary.vue";
 import * as Sentry from "@sentry/vue";
-
-// importing massive json dumps so slow down performance
-import testimonials from '../components/testimonials/testimonials.json'
-import testimonials2 from '../components/testimonials/testimonials2.json'
-
-const transaction = Sentry.startTransaction({ name: "loadTestimonialsHomePage" });
-
-Sentry.configureScope(scope => scope.setSpan(transaction));
-
-// performing unnecessary operations to further slow down performance
-const testimonialArray = []
-
-testimonials.forEach(eachTestimonial => {
-  testimonialArray.push(eachTestimonial)
-})
-
-testimonials2.forEach(eachTestimonial => {
-  testimonialArray.push(eachTestimonial)
-})
-
-const finalRenderTestimonal = (testimonialArrayIn) => {
-  // registering and rendering only the first five items of the entire dump
-  const renderedTestimonials = [];
-  for (let i=0; i<=4; i++) {
-    renderedTestimonials.push(testimonialArrayIn[i])
-
-  }
-  console.log('render', renderedTestimonials)
-  return renderedTestimonials
-}
-
-const resultingTest = finalRenderTestimonal(testimonialArray)
-
-const span = transaction.startChild({
-  data: {
-    resultingTest
-  },
-  op: 'task',
-  description: `running the testimonial rendering`,
-});
-span.finish();
-transaction.finish();
-
 
 export default {
   name: "app",
@@ -69,6 +31,42 @@ export default {
       loading: true 
     };
   },
+
+  methods: {
+    checkout: function() {
+      const transaction = Sentry.startTransaction({ name: "checkout-cart" });
+      // Do this or the trace won't include the backend transaction
+      Sentry.getCurrentHub().configureScope(scope => scope.setSpan(transaction));
+      //Sentry.configureScope(scope => scope.setSpan(transaction));
+
+      console.log("checkout...");
+      console.log(transaction)
+      const traceAndSpanID = transaction.traceId + "-" + transaction.spanId;
+      // var myHeaders = new Headers();
+      // myHeaders.append("Content-Type", "text/plain", );
+
+      var raw = "{\"cart\":{\"items\":[{\"id\":4,\"title\":\"Botana Voice\",\"description\":\"Lets plants speak for themselves.\",\"descriptionfull\":\"Now we don't want him to get lonely, so we'll give him a little friend. Let your imagination just wonder around when you're doing these things. Let your imagination be your guide. Nature is so fantastic, enjoy it. Let it make you happy.\",\"price\":175,\"img\":\"https://storage.googleapis.com/application-monitoring/plant-to-text.jpg\",\"imgcropped\":\"https://storage.googleapis.com/application-monitoring/plant-to-text-cropped.jpg\",\"pg_sleep\":\"\",\"reviews\":[{\"id\":4,\"productid\":4,\"rating\":4,\"customerid\":null,\"description\":null,\"created\":\"2021-06-04 00:12:33.553939\",\"pg_sleep\":\"\"},{\"id\":5,\"productid\":4,\"rating\":3,\"customerid\":null,\"description\":null,\"created\":\"2021-06-04 00:12:45.558259\",\"pg_sleep\":\"\"},{\"id\":6,\"productid\":4,\"rating\":2,\"customerid\":null,\"description\":null,\"created\":\"2021-06-04 00:12:50.510322\",\"pg_sleep\":\"\"},{\"id\":13,\"productid\":4,\"rating\":3,\"customerid\":null,\"description\":null,\"created\":\"2021-07-01 00:12:43.312186\",\"pg_sleep\":\"\"},{\"id\":14,\"productid\":4,\"rating\":3,\"customerid\":null,\"description\":null,\"created\":\"2021-07-01 00:12:54.719873\",\"pg_sleep\":\"\"},{\"id\":15,\"productid\":4,\"rating\":3,\"customerid\":null,\"description\":null,\"created\":\"2021-07-01 00:12:57.760686\",\"pg_sleep\":\"\"},{\"id\":16,\"productid\":4,\"rating\":3,\"customerid\":null,\"description\":null,\"created\":\"2021-07-01 00:13:00.140407\",\"pg_sleep\":\"\"},{\"id\":17,\"productid\":4,\"rating\":3,\"customerid\":null,\"description\":null,\"created\":\"2021-07-01 00:13:00.971730\",\"pg_sleep\":\"\"},{\"id\":18,\"productid\":4,\"rating\":3,\"customerid\":null,\"description\":null,\"created\":\"2021-07-01 00:13:01.665798\",\"pg_sleep\":\"\"},{\"id\":19,\"productid\":4,\"rating\":3,\"customerid\":null,\"description\":null,\"created\":\"2021-07-01 00:13:02.278934\",\"pg_sleep\":\"\"}]}],\"quantities\":{\"4\":2},\"total\":350},\"form\":{\"loading\":false}}";
+      
+      var requestOptions = {
+        method: 'POST',
+        headers: {"Content-Type": "text/plain", "sentry-trace": traceAndSpanID},
+        body: raw,
+        redirect: 'follow'
+      };
+
+      fetch("https://application-monitoring-flask-dot-sales-engineering-sf.appspot.com/checkout", requestOptions)
+        .then(function(response) {
+          if (!response.ok) {
+            const err = new Error(response.status + " -- " + (response.statusText || "Internal Server Error"));
+            Sentry.captureException(err);
+            console.error(err);
+          }
+          console.log("transaction.finish");
+          transaction.finish();
+        });      
+    }
+  },
+
   beforeCreate() {
     try {
     // Do this or the trace won't include the backend transaction
@@ -174,5 +172,48 @@ export default {
     }
   }
 
+  .button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+  .checkout-button {
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .checkout-button,
+  a.btn,
+  input[type='submit'] {
+    -webkit-appearance: none;
+    background-color: hsla(160, 100%, 37%, 1);
+    color: #fff;
+    padding: 0.75rem 1rem;
+    line-height: 1.5;
+    border-radius: 0.25em;
+    border: none;
+    text-decoration: none;
+    font-size: 1rem;
+    margin: 0.5rem 0;
+  }
+
+  .checkout-button:hover,
+  a.btn:hover,
+  input[type='submit']:hover {
+    cursor: pointer;
+    background-color: #002626;
+    color: #fff;
+  }
+  .checkout-button:active,
+  a.btn:active,
+  input[type='submit']:active {
+    background-color: #f6cfb2;
+  }
 }
 </style>
