@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import ManualView from '../views/ManualView.vue'
 import AboutView from "../views/AboutView.vue"
+import SubscribeView from '../views/SubscribeView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -19,6 +20,11 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       // component: () => import("../views/AboutView.vue"),
       component: AboutView,
+    },
+    {
+      path: "/subscribe",
+      name: "subscribe",
+      component: SubscribeView,
     },
     {
       path: "/trigger",

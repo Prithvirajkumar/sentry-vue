@@ -108,14 +108,17 @@ export default {
 
     setTimeout(() => {
       this.loading = false
+      span.finish();
+      transaction.finish();
     }, 5000)
 
     } catch (ex) {
       console.log(ex);
-    } finally {
-    span.finish();
-    transaction.finish();
     }
+    // finally {
+    // span.finish();
+    // transaction.finish();
+    // }
   },
 }
 

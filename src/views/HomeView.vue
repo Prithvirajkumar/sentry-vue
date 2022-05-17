@@ -10,7 +10,7 @@
         </div>
       </div>
       <div class="button-container">
-        <button v-if="!loading" class="checkout-button" :onClick="checkout">Checkout</button>
+        <button v-if="!loading" class="checkout-button" :onClick="checkout">Checkout your cart</button>
       </div>
     </div>
   </div>
@@ -94,16 +94,20 @@ export default {
         .then(result => {
           this.products = JSON.parse(result); 
           this.loading = false;
+          span.finish();
+          transaction.finish();
           })
         .catch(error => {
           console.log('error', error);
         });
+      console.log(span)
     } catch (ex) {
       console.log(ex);
-    } finally {
-    span.finish();
-    transaction.finish();
-    }
+    } 
+    // finally {
+    // span.finish();
+    // transaction.finish();
+    // }
   },
 }
 
@@ -192,7 +196,7 @@ export default {
   a.btn,
   input[type='submit'] {
     -webkit-appearance: none;
-    background-color: hsla(160, 100%, 37%, 1);
+    background-color: #002626;
     color: #fff;
     padding: 0.75rem 1rem;
     line-height: 1.5;
@@ -207,8 +211,8 @@ export default {
   a.btn:hover,
   input[type='submit']:hover {
     cursor: pointer;
-    background-color: #002626;
-    color: #fff;
+    background-color: #dddc4e;
+    color: #002626;
   }
   .checkout-button:active,
   a.btn:active,

@@ -4,7 +4,15 @@ This project was created using Vue CLI - https://cli.vuejs.org/guide/creating-a-
 - BrowserTracing (Performance)  
 
 ## Setup
-Create a .env and enter your DSN. See .env.example for an example.
+Note: This project sets the release details automatically using a combination of PACKAGE and releases (automatically computed)
+Create a .env and enter following fields. See .env.example for an example:
+1. VITE_APP_DSN
+2. VITE_APP_PACKAGE
+
+Edit the following fields within the run.sh file:
+1. PACKAGE
+2. SENTRY_ORG
+3. SENTRY_PROJECT
 
 ## Run
 npm install - this will install all dependencies
@@ -18,5 +26,8 @@ Selecting checkout will generate an Internal Server Error
 2. About Us page
 This page is slowed down using front end configurations, performance drops can be viewed under the 'about' transaction.
 
-3. Manually Trigger Errors page
+3. Subscribe page
+Entering a valid email address will throw an error
+
+4. Manually Trigger Errors page
 This page allows you to generate errors by triggering them using buttons

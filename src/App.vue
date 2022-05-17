@@ -46,7 +46,8 @@ console.log(renderedTestimonials)
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
-        <RouterLink to="/trigger">Manually Trigger Errors</RouterLink>
+        <RouterLink to="/subscribe">Subscribe</RouterLink>
+        <!-- <RouterLink to="/trigger">Manually Trigger Errors</RouterLink> -->
       </nav>
     </div>
   <RouterView />
