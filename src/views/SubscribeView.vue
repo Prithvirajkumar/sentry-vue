@@ -16,6 +16,23 @@ import EventButton from "../components/EventButton.vue";
 import * as Sentry from "@sentry/vue";
 import isEmail from 'validator/lib/isEmail';
 
+// Generating Type error
+let num = 11;
+try {
+    num.toUpperCase()
+} catch (err) {
+    console.error(err)
+    Sentry.captureException(err)
+}
+
+// Generating Syntax error
+try {
+    eval("foo bar");
+} catch (err) {
+    console.error(err)
+    Sentry.captureException(err)
+}
+
 export default {
   name: "app",
   components: {

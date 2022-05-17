@@ -28,7 +28,7 @@ export default {
   data: function() {
     return { 
       products: [],
-      loading: true 
+      loading: true
     };
   },
 
@@ -62,9 +62,15 @@ export default {
             console.error(err);
           }
           console.log("transaction.finish");
-          transaction.finish();
+          transaction.finish(); 
+          // introduces an unhandled error
+          transactionComplete = true;
         });   
-      this.$router.push('/error');   
+        // this.$router.push('/error');
+        // The delay has been added to complete the transaction
+        setTimeout(() => {
+          this.$router.push('/error');
+        }, 2000)
     }
   },
 
@@ -97,6 +103,8 @@ export default {
           this.loading = false;
           span.finish();
           transaction.finish();
+          // Generating Undefined error
+          transactionComplete = true;
           })
         .catch(error => {
           console.log('error', error);
