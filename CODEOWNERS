@@ -1,3 +1,5 @@
+# default code owner of all files
 * @prithvirajkumar
+
+# default code owner of all js files
 *.js @prithvirajkumar
-*.vue @prithvirajkumar
