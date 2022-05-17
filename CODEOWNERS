@@ -3,3 +3,6 @@
 
 # default code owner of all js files
 *.js @prithvirajkumar
+
+# sentry-specific
+codeowners:*.js                    #prithvis-team
