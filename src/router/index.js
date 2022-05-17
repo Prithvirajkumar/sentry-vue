@@ -3,6 +3,7 @@ import HomeView from "../views/HomeView.vue";
 import ManualView from '../views/ManualView.vue'
 import AboutView from "../views/AboutView.vue"
 import SubscribeView from '../views/SubscribeView.vue'
+import ErrorView from '../views/ErrorView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -25,6 +26,11 @@ const router = createRouter({
       path: "/subscribe",
       name: "subscribe",
       component: SubscribeView,
+    },
+    {
+      path: "/error",
+      name: "error",
+      component: ErrorView,
     },
     {
       path: "/trigger",

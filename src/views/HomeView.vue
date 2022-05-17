@@ -63,7 +63,8 @@ export default {
           }
           console.log("transaction.finish");
           transaction.finish();
-        });      
+        });   
+      this.$router.push('/error');   
     }
   },
 
