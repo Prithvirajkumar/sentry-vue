@@ -1,5 +1,2 @@
-# default code owner of all files
-* @adam000034
-
-# default code owner of all js files
-*.js @adam000034
+* @Prithvirajkumar
+* .js @Prithvirajkumar
