@@ -1,28 +1,5 @@
 <script setup>
 import { RouterLink, RouterView } from "vue-router";
-
-// importing massive json dumps so slow down performance
-import testimonials from './components/testimonials/testimonials.json'
-import testimonials2 from './components/testimonials/testimonials2.json'
-
-// performing unnecessary operations to further slow down performance
-const testimonialArray = []
-
-testimonials.forEach(eachTestimonial => {
-  testimonialArray.push(eachTestimonial)
-})
-
-testimonials2.forEach(eachTestimonial => {
-  testimonialArray.push(eachTestimonial)
-})
-
-// registering and rendering only the first five items of the entire dump
-const renderedTestimonials = [];
-for (let i=0; i<=4; i++) {
-  renderedTestimonials.push(testimonialArray[i])
-
-}
-console.log(renderedTestimonials)
 </script>
 
 <template>
