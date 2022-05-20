@@ -10,7 +10,7 @@
         </div>
       </div>
       <div class="button-container">
-        <button v-if="!loading" class="checkout-button" :onClick="checkout">Checkout your cart</button>
+        <button v-if="!loading" class="checkout-button" :onClick="checkout" :disabled='disabledStatus'>Checkout your cart</button>
       </div>
     </div>
   </div>
@@ -28,12 +28,14 @@ export default {
   data: function() {
     return { 
       products: [],
-      loading: true
+      loading: true,
+      disabledStatus: false
     };
   },
 
   methods: {
     checkout: function() {
+      this.disabledStatus = true
       const transaction = Sentry.startTransaction({ name: "checkout-cart" });
       // Do this or the trace won't include the backend transaction
       Sentry.getCurrentHub().configureScope(scope => scope.setSpan(transaction));
@@ -67,7 +69,7 @@ export default {
         // The delay has been added to complete the transaction
         setTimeout(() => {
           this.$router.push('/error');
-        }, 1500)
+        }, 1000)
     }
   },
 
@@ -203,8 +205,8 @@ export default {
   a.btn,
   input[type='submit'] {
     -webkit-appearance: none;
-    background-color: #002626;
-    color: #fff;
+    background-color: #dddc4e;
+    color: #002626;
     padding: 0.75rem 1rem;
     line-height: 1.5;
     border-radius: 0.25em;
@@ -218,13 +220,13 @@ export default {
   a.btn:hover,
   input[type='submit']:hover {
     cursor: pointer;
-    background-color: #dddc4e;
+    background-color: #f6cfb2;
     color: #002626;
   }
   .checkout-button:active,
   a.btn:active,
   input[type='submit']:active {
-    background-color: #f6cfb2;
+    background-color: grey;
   }
 }
 </style>
