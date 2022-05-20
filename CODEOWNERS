@@ -1,5 +1,9 @@
-# default code owner of all files
-* @Prithvirajkumar
-
-# default code owner of all js files
-*.js @Prithvirajkumar
+* @cstavitsky
+react/ @cstavitsky
+react/src/ @cstavitsky
+react/src/components/ @cstavitsky
+/react/ @sdzhong
+/react/src/ @sdzhong
+/react/src/components/ @sdzhong
+flask/ @cstavitsky
+/flask/ @sdzhong
