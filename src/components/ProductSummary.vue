@@ -10,7 +10,7 @@
                     {{product.description}}
                   </p>
                 </div>
-              <button>
+              <button @click="onClick()">
                 Add to cart — {{product.price}}.00
               </button>
             </div>
@@ -21,7 +21,11 @@
 
 <script>
   export default { 
-    props: ['products']
+    // props: ['products']
+    props: {
+      products: Array,
+      onClick: Function
+      }
   };
 </script>
 

@@ -6,7 +6,7 @@
     <div id="app">
       <div id="product-list">
         <div>
-          <ProductSummary :products="products" />
+          <ProductSummary :products="products" :onClick="addToCartPrice"/>
         </div>
       </div>
       <div class="button-container">
@@ -29,7 +29,8 @@ export default {
     return { 
       products: [],
       loading: true,
-      disabledStatus: false
+      disabledStatus: false,
+      checkoutCartPrice: 0
     };
   },
 
@@ -70,6 +71,13 @@ export default {
         setTimeout(() => {
           this.$router.push('/error');
         }, 1000)
+    },
+
+    addToCartPrice: function() {
+      console.log(this.products[0].id)
+      if (this.products[0].id === 1) {
+        console.log('test')
+      }
     }
   },
 
