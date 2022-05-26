@@ -1,15 +1,18 @@
 import { createApp } from "vue";
 import * as Sentry from "@sentry/vue";
 import { BrowserTracing } from "@sentry/tracing";
-import release from './utils/release'
+import { createPinia } from "pinia";
 // import { Debug as DebugIntegration } from "@sentry/integrations";
 
+import release from './utils/release'
 import App from "./App.vue";
 import router from "./router";
 
 const app = createApp(App);
+app.use(createPinia());  
+app.use(router);
+
 const RELEASE = release(import.meta.env.VITE_APP_PACKAGE)
-console.log(RELEASE)
 
 Sentry.init({
     app,
@@ -37,7 +40,5 @@ Sentry.init({
     autoSessionTracking: true,
     trackComponents: true,
   });
-
-app.use(router);
 
 app.mount("#app");

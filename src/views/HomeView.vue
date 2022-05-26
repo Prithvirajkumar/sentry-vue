@@ -1,21 +1,3 @@
-<template>
-  <div class="loading-container">
-    <div v-if="loading" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
-  </div>
-  <div class="home">
-    <div id="app">
-      <div id="product-list">
-        <div>
-          <ProductSummary :products="products" :onClick="addToCartPrice"/>
-        </div>
-      </div>
-      <div class="button-container">
-        <button v-if="!loading" class="checkout-button" :onClick="checkout" :disabled='disabledStatus'>Checkout your cart</button>
-      </div>
-    </div>
-  </div>
-</template>
-
 <script>
 import ProductSummary from "../components/ProductSummary.vue";
 import * as Sentry from "@sentry/vue";
@@ -74,14 +56,11 @@ export default {
     },
 
     addToCartPrice: function() {
-      console.log(this.products[0].id)
-      if (this.products[0].id === 1) {
-        console.log('test')
-      }
+      console.log(this.products[1])
     }
   },
 
-  beforeCreate() {
+  mounted() {
     try {
     // Do this or the trace won't include the backend transaction
     const transaction = Sentry.getCurrentHub().getScope().getTransaction();
@@ -129,6 +108,26 @@ export default {
 }
 
 </script>
+
+<template>
+  <div class="loading-container">
+    <div v-if="loading" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+  </div>
+  <div class="home">
+    <!-- <button @click="store.increment()">Increment</button>
+    <h3>Count: {{store.counter}}</h3> -->
+    <div id="app">
+      <div id="product-list">
+        <div>
+          <ProductSummary :products="products" :onClick="addToCartPrice"/>
+        </div>
+      </div>
+      <div class="button-container">
+        <button v-if="!loading" class="checkout-button" :onClick="checkout" :disabled='disabledStatus'>Checkout your cart</button>
+      </div>
+    </div>
+  </div>
+</template>
 
 <style>
 @media (min-width: 1px) {
