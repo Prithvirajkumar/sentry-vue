@@ -10,7 +10,8 @@
                     {{product.description}}
                   </p>
                 </div>
-              <button @click="onClick()">
+              <!-- <button @click="onClick()"> -->
+              <button @click="addToCartPrice(product.price)">
                 Add to cart — {{product.price}}.00
               </button>
             </div>
@@ -20,12 +21,21 @@
 </template>
 
 <script>
+import {useCounterStore} from '../stores/counter'
+
   export default { 
     // props: ['products']
     props: {
       products: Array,
       onClick: Function
-      }
+      },
+    methods: {
+      addToCartPrice: function(price) {
+        const store = useCounterStore()
+        store.increment(price)
+        console.log(store.counter)
+    }
+    }
   };
 </script>
 

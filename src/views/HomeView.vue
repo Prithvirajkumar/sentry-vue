@@ -1,6 +1,7 @@
 <script>
 import ProductSummary from "../components/ProductSummary.vue";
 import * as Sentry from "@sentry/vue";
+import {useCounterStore} from '../stores/counter'
 
 export default {
   name: "app",
@@ -56,7 +57,10 @@ export default {
     },
 
     addToCartPrice: function() {
-      console.log(this.products[1])
+      const store = useCounterStore()
+      this.checkoutCartPrice = store.counter;
+      // console.log('price', this.checkoutCartPrice)
+      // console.log(store.counter)
     }
   },
 
@@ -118,12 +122,13 @@ export default {
     <h3>Count: {{store.counter}}</h3> -->
     <div id="app">
       <div id="product-list">
-        <div>
-          <ProductSummary :products="products" :onClick="addToCartPrice"/>
+        <div :onClick="addToCartPrice">
+          <!-- <ProductSummary :products="products" :onClick="addToCartPrice"/> -->
+          <ProductSummary :products="products"/>
         </div>
       </div>
       <div class="button-container">
-        <button v-if="!loading" class="checkout-button" :onClick="checkout" :disabled='disabledStatus'>Checkout your cart</button>
+        <button v-if="!loading" class="checkout-button" :onClick="checkout" :disabled='disabledStatus'>Checkout your cart ($ {{checkoutCartPrice}})</button>
       </div>
     </div>
   </div>
