@@ -4,6 +4,10 @@ This project was created using Vue CLI - https://cli.vuejs.org/guide/creating-a-
 - BrowserTracing (Performance)  
 
 ## Setup
+works with node v16.15.1
+
+you may need to `npm install -g serve`
+
 Note: This project sets the release details automatically using a combination of PACKAGE and releases (automatically computed)
 Create a .env and enter following fields. See .env.example for an example:
 1. VITE_APP_DSN
@@ -15,7 +19,7 @@ Edit the following fields within the run.sh file:
 3. SENTRY_PROJECT
 
 ## Run
-npm install - this will install all dependencies
+npm install - this will install all dependencies  
 ./run.sh - this will build the files and will also serve the built file. This will also handle uploading of sourcemaps
 
 ## Demo
