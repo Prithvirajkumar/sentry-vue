@@ -35,3 +35,10 @@ Entering a valid email address will throw an error
 
 4. Manually Trigger Errors page
 This page allows you to generate errors by triggering them using buttons
+
+## Deploy
+```
+gcloud auth login
+./deploy.sh
+```
+app.yaml https://cloud.google.com/appengine/docs/standard/nodejs/config/appref
