@@ -12,6 +12,7 @@ SENTRY_ORG=testorg-az
 SENTRY_PROJECT=prithvi-test-vue
 PREFIX=assets
 
+rm -rf dist
 npm run build
 
 sentry-cli releases -o $SENTRY_ORG new -p $SENTRY_PROJECT $RELEASE

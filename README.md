@@ -37,7 +37,6 @@ Entering a valid email address will throw an error
 This page allows you to generate errors by triggering them using buttons
 
 ## Deploy
-a copy of favicon.ico needs to be in /dist/assets, in order for the Vue logo to appear on the app engine served app.
 
 ```
 gcloud auth login
